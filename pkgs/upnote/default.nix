@@ -12,7 +12,6 @@
   cups,
   gtk3,
   libgbm,
-  libxdamage,
   libxkbcommon,
   nspr,
   nss,
@@ -46,7 +45,6 @@ stdenv.mkDerivation {
     cups
     gtk3
     libgbm
-    libxdamage
     libxkbcommon
     nspr
     nss
