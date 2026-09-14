@@ -48,6 +48,10 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   #   경우**(업로드 사고)를 잡는다 — `gitlab-runner --version` 출력에 version 이 있어야 통과한다.
   doInstallCheck = true;
   nativeInstallCheckInputs = [ versionCheckHook ];
+  #   실행 파일 경로도 명시한다 — meta.mainProgram 만으로는 build.yml 매트릭스의 nixos-25.05 에서 깨진다.
+  #   그 판의 mkDerivation 은 mainProgram 을 NIX_MAIN_PROGRAM 으로 내보내지 않고 훅도 versionCheckProgram
+  #   과 pname 만 봐서, pname(gitlab-runner-bin)으로 bin/gitlab-runner-bin 을 찾다 실패했다(ce871f7 CI).
+  versionCheckProgram = "${placeholder "out"}/bin/gitlab-runner";
   #   인자를 명시하는 건 군더더기가 아니다 — 비워두면 훅이 `--version` 실패 시 `--help` 로 폴백하는데,
   #   gitlab-runner 의 --help 도 VERSION 을 찍어서 --version 이 깨져도 조용히 통과해 버린다.
   versionCheckProgramArg = "--version";
